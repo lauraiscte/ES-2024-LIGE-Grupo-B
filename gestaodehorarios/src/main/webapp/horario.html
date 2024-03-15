@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<link
+	href="https://unpkg.com/tabulator-tables@4.8.4/dist/css/tabulator.min.css"
+	rel="stylesheet">
+<script type="text/javascript"
+	src="https://unpkg.com/tabulator-tables@4.8.4/dist/js/tabulator.min.js"></script>
+</head>
+<body>
+	<H1>Horário</H1>
+
+	<div id="column-selection">
+	    <label><input type="checkbox" name="column" value="curso" checked>Curso</label>
+        <label><input type="checkbox" name="column" value="uc" checked>Unidade Curricular</label>
+	    <label><input type="checkbox" name="column" value="turno" checked>Turno</label>
+	    <label><input type="checkbox" name="column" value="turma" checked>Turma</label>
+	    <label><input type="checkbox" name="column" value="inscritos" checked>Inscritos no Turno</label>
+	    <label><input type="checkbox" name="column" value="dia" checked>Dia da Semana</label>
+	    <label><input type="checkbox" name="column" value="horaInicio" checked>Hora início da Aula</label>
+	    <label><input type="checkbox" name="column" value="horaFim" checked>Hora fim da Aula</label>
+	    <label><input type="checkbox" name="column" value="data" checked>Data da Aula</label>
+	    <label><input type="checkbox" name="column" value="caracteristicas" checked>Características da Sala</label>
+	    <label><input type="checkbox" name="column" value="sala" checked>Sala Atribuída</label>
+	    <label><input type="checkbox" name="column" value="semanaAno" checked>Semana do ano</label>
+	    <label><input type="checkbox" name="column" value="semanaSemestre" checked>Semana do semestre</label>
+	</div><br>
+	
+	<div id="example-table"></div>
+
+	<script type="text/javascript">
+
+    var tabledata = []; // Inicializa a variável tabledata
+    var table;
+
+    // Função para ler o arquivo CSV
+    function lerCSV(caminhoArquivo) {
+        fetch(caminhoArquivo)
+            .then(response => response.text())
+            .then(text => {
+                var linhas = text.trim().split('\n');
+                linhas.shift(); // Remove o cabeçalho
+                
+                linhas.forEach(linha => {
+                    var colunas = linha.split(';');
+                    tabledata.push({
+                        curso: colunas[0],
+                        uc: colunas[1],
+                        turno: colunas[2],
+                        turma: colunas[3],
+                        inscritos: colunas[4],
+                        dia: colunas[5],
+                        horaInicio: colunas[6],
+                        horaFim: colunas[7],
+                        data: colunas[8],
+                        caracteristicas: colunas[9],
+                        sala: colunas[10],
+                    });
+                });
+                // Inicializa a tabela Tabulator com os dados lidos
+                iniciarTabela();
+            })
+            .catch(error => console.error(error));
+    }
+
+    // Função para inicializar a tabela Tabulator
+    function iniciarTabela() {
+        table = new Tabulator("#example-table", {
+            data: tabledata,
+            layout: "fitDatafill",
+            pagination: "local",
+            paginationSize: 10,
+            paginationSizeSelector: [5, 10, 20, 40],
+            movableColumns: true,
+            paginationCounter: "rows",
+            initialSort: [{ column: "building", dir: "asc" }],
+            columns: [
+                { title: "Curso", field: "curso", headerFilter: "input" },
+                { title: "Unidade Curricular", field: "uc", headerFilter: "input" },
+                { title: "Turno", field: "turno", headerFilter: "input" },
+                { title: "Turma", field: "turma", headerFilter: "input" },
+                { title: "Inscritos no turno", field: "inscritos", headerFilter: "input" },
+                { title: "Dia da Semana", field: "dia", headerFilter: "input" },
+                { title: "Hora início da aula", field: "horaInicio", headerFilter: "input" },
+                { title: "Hora fim da aula", field: "horaFim", headerFilter: "input" },
+                { title: "Data da aula", field: "data", headerFilter: "input" },
+                { title: "Características da sala pedida para a aula", field: "caracteristicas", headerFilter: "input" },
+                { title: "Sala atribuída", field: "sala", headerFilter: "input" },
+                { title: "Semana do ano", field: "semanaAno", headerFilter: "input" },
+                { title: "Semana do semestre", field: "semanaSemestre", headerFilter: "input" },
+            ],
+        });
+        
+     	// Adiciona um listener para as caixas de seleção
+        var checkboxes = document.querySelectorAll('input[type=checkbox][name=column]');
+        checkboxes.forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                var column = this.value;
+                var visible = this.checked;
+                table.toggleColumn(column, visible);
+            });
+        });
+    }
+
+    // Chamada para ler o arquivo CSV e iniciar a tabela
+    lerCSV('HorarioDeExemplo.csv');
+
+</script>
+</body>
+</html>
