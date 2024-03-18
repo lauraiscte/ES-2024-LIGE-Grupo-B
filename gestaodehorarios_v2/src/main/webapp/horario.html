@@ -4,6 +4,7 @@
 <meta charset="utf-8" />
 <link href="https://unpkg.com/tabulator-tables@4.8.4/dist/css/tabulator.min.css" rel="stylesheet">
 <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.8.4/dist/js/tabulator.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 </head>
 <body>
     <h1>Horário</h1>
@@ -43,12 +44,12 @@
         var reader = new FileReader();
         reader.onload = function(e) {
             var contents = e.target.result;
-            parseCSV(contents);
+            lerCSV(contents);
         };
         reader.readAsText(file);
     }
 
-    function parseCSV(csv) {
+    function lerCSV(csv) {
         var lines = csv.trim().split('\n');
         lines.shift(); // Remove o cabeçalho
         
@@ -68,7 +69,7 @@
                 dia: columns[5],
                 horaInicio: columns[6],
                 horaFim: columns[7],
-                data: columns[8],
+                data: dataAula.toLocaleDateString(),
                 caracteristicas: columns[9],
                 sala: columns[10],
                 semanaAno: semanaAno,
@@ -89,7 +90,7 @@
             paginationSizeSelector: [5, 10, 20, 40],
             movableColumns: true,
             paginationCounter: "rows",
-            initialSort: [{ column: "curso", dir: "asc" }], // Corrigido o nome da coluna para o valor correto
+            initialSort: [{ column: "curso", dir: "asc" }],
             columns: [
                 { title: "Curso", field: "curso", headerFilter: "input" },
                 { title: "Unidade Curricular", field: "uc", headerFilter: "input" },
@@ -99,7 +100,7 @@
                 { title: "Dia da Semana", field: "dia", headerFilter: "input" },
                 { title: "Hora início da aula", field: "horaInicio", headerFilter: "input" },
                 { title: "Hora fim da aula", field: "horaFim", headerFilter: "input" },
-                { title: "Data da aula", field: "data", headerFilter: "input" },
+                { title: "Data da aula", field: "data", headerFilter: "input", sorter: "date"},
                 { title: "Características da sala pedida para a aula", field: "caracteristicas", headerFilter: "input" },
                 { title: "Sala atribuída", field: "sala", headerFilter: "input" },
                 { title: "Semana do ano", field: "semanaAno", headerFilter: "input" },
@@ -118,13 +119,13 @@
         });
     }
     
-	 // Função para calcular o número da semana do ano
-    function getSemanaAno(date) {
-        var d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-        d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
-        var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-        var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-        return weekNo;
+	// Função para calcular o número da semana do ano
+    function getSemanaAno(date) {   	
+        var firstDayYear = new Date(date.getFullYear(), 0, 1); // Criar objeto Date para o primeiro dia do ano
+        var diff = date.getTime() - firstDayYear.getTime(); // Calcular a diferença em milissegundos entre as duas datas    
+        var oneWeek = 7 * 24 * 60 * 60 * 1000; // Definir a constante para uma semana em milissegundos
+        var semanaAno = Math.floor(diff / oneWeek) + 1; // Calcular o número da semana do ano        
+        return semanaAno;
     }
 	 
  	// Função para calcular a semana do semestre
@@ -145,8 +146,6 @@
         var semanaSemestre = Math.floor(diff / oneWeek) + 1;
         return semanaSemestre;
     }
-
-
 
 
     </script>
