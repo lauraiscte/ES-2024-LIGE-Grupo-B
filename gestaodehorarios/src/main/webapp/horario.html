@@ -33,9 +33,12 @@
 
     var tabledata = []; // Inicializa a variável tabledata
     var table;
-
+    
+    
+    
     // Função para ler o arquivo CSV
     function lerCSV(caminhoArquivo) {
+   
         fetch(caminhoArquivo)
             .then(response => response.text())
             .then(text => {
@@ -44,6 +47,8 @@
                 
                 linhas.forEach(linha => {
                     var colunas = linha.split(';');
+                    //var dataAula = new Date(colunas[8]);
+                   	//var semanaSemestre = calcularSemanaSemestre(dataAula);
                     tabledata.push({
                         curso: colunas[0],
                         uc: colunas[1],
@@ -56,6 +61,7 @@
                         data: colunas[8],
                         caracteristicas: colunas[9],
                         sala: colunas[10],
+                        //semanaSemestre: semanaSemestre
                     });
                 });
                 // Inicializa a tabela Tabulator com os dados lidos

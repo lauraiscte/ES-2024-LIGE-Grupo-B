@@ -2,36 +2,51 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8" />
-<link href="https://unpkg.com/tabulator-tables@4.8.4/dist/css/tabulator.min.css" rel="stylesheet">
-<script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.8.4/dist/js/tabulator.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<link
+	href="https://unpkg.com/tabulator-tables@4.8.4/dist/css/tabulator.min.css"
+	rel="stylesheet">
+<script type="text/javascript"
+	src="https://unpkg.com/tabulator-tables@4.8.4/dist/js/tabulator.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<link rel="stylesheet" href="estilo.css">
 </head>
 <body>
-    <h1>Horário</h1>
+	<h1>Horário</h1>
 
-    <div>
-        <input type="file" id="fileInput" accept=".csv">
-    </div><br>
-    
-    <div id="column-selection">
-        <label><input type="checkbox" name="column" value="curso" checked>Curso</label>
-        <label><input type="checkbox" name="column" value="uc" checked>Unidade Curricular</label>
-        <label><input type="checkbox" name="column" value="turno" checked>Turno</label>
-        <label><input type="checkbox" name="column" value="turma" checked>Turma</label>
-        <label><input type="checkbox" name="column" value="inscritos" checked>Inscritos no Turno</label>
-        <label><input type="checkbox" name="column" value="dia" checked>Dia da Semana</label>
-        <label><input type="checkbox" name="column" value="horaInicio" checked>Hora início da Aula</label>
-        <label><input type="checkbox" name="column" value="horaFim" checked>Hora fim da Aula</label>
-        <label><input type="checkbox" name="column" value="data" checked>Data da Aula</label>
-        <label><input type="checkbox" name="column" value="caracteristicas" checked>Características da Sala</label>
-        <label><input type="checkbox" name="column" value="sala" checked>Sala Atribuída</label>
-        <label><input type="checkbox" name="column" value="semanaAno" checked>Semana do ano</label>
-        <label><input type="checkbox" name="column" value="semanaSemestre" checked>Semana do semestre</label>
-    </div><br>
-    
-    <div id="example-table"></div>
+	<div>
+		<input type="file" id="fileInput" accept=".csv">
+	</div>
+	
+	
+	<br>
 
-    <script type="text/javascript">
+	<div id="column-selection">
+		<label><input type="checkbox" name="column" value="curso"
+			checked>Curso</label> <label><input type="checkbox"
+			name="column" value="uc" checked>Unidade Curricular</label> <label><input
+			type="checkbox" name="column" value="turno" checked>Turno</label> <label><input
+			type="checkbox" name="column" value="turma" checked>Turma</label> <label><input
+			type="checkbox" name="column" value="inscritos" checked>Inscritos
+			no Turno</label> <label><input type="checkbox" name="column"
+			value="dia" checked>Dia da Semana</label> <label><input
+			type="checkbox" name="column" value="horaInicio" checked>Hora
+			início da Aula</label> <label><input type="checkbox" name="column"
+			value="horaFim" checked>Hora fim da Aula</label> <label><input
+			type="checkbox" name="column" value="data" checked>Data da
+			Aula</label> <label><input type="checkbox" name="column"
+			value="caracteristicas" checked>Características da Sala</label> <label><input
+			type="checkbox" name="column" value="sala" checked>Sala
+			Atribuída</label> <label><input type="checkbox" name="column"
+			value="semanaAno" checked>Semana do ano</label> <label><input
+			type="checkbox" name="column" value="semanaSemestre" checked>Semana
+			do semestre</label>
+	</div>
+	<br>
+
+	<div id="example-table"></div>
+
+	<script type="text/javascript">
 
     var tabledata = []; // Inicializa a variável tabledata
     var table;
@@ -69,7 +84,7 @@
                 dia: columns[5],
                 horaInicio: columns[6],
                 horaFim: columns[7],
-                data: dataAula.toLocaleDateString(),
+                data: dataAula.toLocaleDateString(), //retorna a data sob a forma de string 
                 caracteristicas: columns[9],
                 sala: columns[10],
                 semanaAno: semanaAno,
