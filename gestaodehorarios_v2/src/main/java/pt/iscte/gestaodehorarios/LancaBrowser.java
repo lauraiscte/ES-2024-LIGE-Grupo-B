@@ -23,7 +23,7 @@ public class LancaBrowser {
 					desk.browse(new java.net.URI("http://localhost:8080/horario.html"));
 				} catch (IOException | URISyntaxException e1) {e1.printStackTrace();} 
 			}  
-	    });
+	    });	   
 	    
 	    button2.addActionListener(new ActionListener(){  	
 			public void actionPerformed(ActionEvent e){  

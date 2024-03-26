@@ -14,33 +14,42 @@
 <body>
 	<h1>Horário</h1>
 
-	<div>
+	<div class="identacao">
 		<input type="file" id="fileInput" accept=".csv">
 	</div>
-	
-	
-	<br>
 
-	<div id="column-selection">
-		<label><input type="checkbox" name="column" value="curso"
-			checked>Curso</label> <label><input type="checkbox"
-			name="column" value="uc" checked>Unidade Curricular</label> <label><input
-			type="checkbox" name="column" value="turno" checked>Turno</label> <label><input
-			type="checkbox" name="column" value="turma" checked>Turma</label> <label><input
-			type="checkbox" name="column" value="inscritos" checked>Inscritos
-			no Turno</label> <label><input type="checkbox" name="column"
-			value="dia" checked>Dia da Semana</label> <label><input
-			type="checkbox" name="column" value="horaInicio" checked>Hora
-			início da Aula</label> <label><input type="checkbox" name="column"
-			value="horaFim" checked>Hora fim da Aula</label> <label><input
-			type="checkbox" name="column" value="data" checked>Data da
-			Aula</label> <label><input type="checkbox" name="column"
-			value="caracteristicas" checked>Características da Sala</label> <label><input
-			type="checkbox" name="column" value="sala" checked>Sala
-			Atribuída</label> <label><input type="checkbox" name="column"
-			value="semanaAno" checked>Semana do ano</label> <label><input
-			type="checkbox" name="column" value="semanaSemestre" checked>Semana
-			do semestre</label>
+<!-- 	<!-- Adicione isso dentro do body, abaixo do exemplo da tabela -->
+<!-- 	<div class="identacao"> -->
+<!-- 		<label for="inputDataHora">Verificar Salas Disponíveis para:</label> <input -->
+<!-- 			type="datetime-local" id="inputDataHora" name="inputDataHora"> -->
+<!-- 		<button onclick="verificarSalasDisponiveis()">Verificar Salas</button> -->
+<!-- 	</div> -->
+<!-- 	<div id="salasDisponiveis"></div> -->
+
+
+	<div class="dropdown">
+		<button class="dropbtn">Selecione as Colunas Visíveis</button>
+		<div class="dropdown-content">
+			<label><input type="checkbox" name="column" value="curso"
+				checked>Curso</label> <label><input type="checkbox"
+				name="column" value="uc" checked>Unidade Curricular</label> <label><input
+				type="checkbox" name="column" value="turno" checked>Turno</label> <label><input
+				type="checkbox" name="column" value="turma" checked>Turma</label> <label><input
+				type="checkbox" name="column" value="inscritos" checked>Inscritos
+				no Turno</label> <label><input type="checkbox" name="column"
+				value="dia" checked>Dia da Semana</label> <label><input
+				type="checkbox" name="column" value="horaInicio" checked>Hora
+				início da Aula</label> <label><input type="checkbox" name="column"
+				value="horaFim" checked>Hora fim da Aula</label> <label><input
+				type="checkbox" name="column" value="data" checked>Data da
+				Aula</label> <label><input type="checkbox" name="column"
+				value="caracteristicas" checked>Características da Sala</label> <label><input
+				type="checkbox" name="column" value="sala" checked>Sala
+				Atribuída</label> <label><input type="checkbox" name="column"
+				value="semanaAno" checked>Semana do ano</label> <label><input
+				type="checkbox" name="column" value="semanaSemestre" checked>Semana
+				do semestre</label>
+		</div>
 	</div>
 	<br>
 
@@ -161,6 +170,33 @@
         var semanaSemestre = Math.floor(diff / oneWeek) + 1;
         return semanaSemestre;
     }
+ 	
+//     function verificarSalasDisponiveis() {
+//         var inputDataHora = document.getElementById('inputDataHora').value;
+        
+//         if (!inputDataHora) {
+//             alert('Por favor, selecione uma data e hora.');
+//             return;
+//         }
+        
+//         var dataHoraSelecionada = new Date(inputDataHora);
+
+//         // Filtrar salas disponíveis com base na data e hora selecionada
+//         var salasDisponiveis = tabledata.filter(function(item) {
+//             var dataAula = new Date(item.data + ' ' + item.horaInicio);
+//             var horaFimAula = new Date(item.data + ' ' + item.horaFim);
+//             // Verifica se a data e hora selecionada está dentro do intervalo da aula
+//             return dataHoraSelecionada >= dataAula && dataHoraSelecionada <= horaFimAula;
+//         }).map(function(item) {
+//             return item.sala;
+//         });
+
+//         if (salasDisponiveis.length === 0) {
+//             document.getElementById('salasDisponiveis').innerHTML = '<p>Nenhuma sala disponível para o horário selecionado.</p>';
+//         } else {
+//             document.getElementById('salasDisponiveis').innerHTML = '<p>Salas Disponíveis:</p><ul><li>' + salasDisponiveis.join('</li><li>') + '</li></ul>';
+//         }
+//     }
 
 
     </script>
