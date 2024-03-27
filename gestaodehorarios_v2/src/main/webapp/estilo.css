@@ -31,10 +31,10 @@ p {
 /* Estilo para o menu dropdown */
 .dropdown {
   position: relative;
-  display: inline;
+  display: inline-block; /* Alterado para inline-block para melhorar a interaÃ§Ã£o */
 }
 
-/* Estilo para o botão do menu dropdown */
+/* Estilo para o botao do menu dropdown */
 .dropbtn {
   background-color: #efefef;
   color: #333;
@@ -46,7 +46,7 @@ p {
   margin: 15px;
 }
 
-/* Estilo para o conteúdo do dropdown (as checkboxes) */
+/* Estilo para o conteudo do dropdown (as checkboxes) */
 .dropdown-content {
   display: none;
   position: absolute;
@@ -63,12 +63,26 @@ p {
   margin-bottom: 8px;
 }
 
-/* Mostra o conteúdo do dropdown quando o botão é clicado */
-.dropdown:hover .dropdown-content {
+/* Mostra o conteudo do dropdown quando o botao e clicado */
+.dropdown:focus-within .dropdown-content {
   display: block;
 }
 
 /* Estilo para as checkboxes */
 .dropdown-content input[type="checkbox"] {
   margin-right: 5px;
+}
+
+
+.verSalas {
+  background-color: #efefef;
+  color: #333;
+  padding: 10px;
+  font-size: 16px;
+  border: 3px solid #077187;
+  cursor: pointer;
+  padding-top: 10px;
+  margin: 15px;
+  margin-right: 30px;
+  float: right;
 }

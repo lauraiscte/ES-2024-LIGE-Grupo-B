@@ -18,13 +18,16 @@
 		<input type="file" id="fileInput" accept=".csv">
 	</div>
 
-<!-- 	<!-- Adicione isso dentro do body, abaixo do exemplo da tabela -->
-<!-- 	<div class="identacao"> -->
-<!-- 		<label for="inputDataHora">Verificar Salas Disponíveis para:</label> <input -->
-<!-- 			type="datetime-local" id="inputDataHora" name="inputDataHora"> -->
-<!-- 		<button onclick="verificarSalasDisponiveis()">Verificar Salas</button> -->
-<!-- 	</div> -->
-<!-- 	<div id="salasDisponiveis"></div> -->
+	<div class="identacao">
+		<label for="inputDataHora">Verificar Salas Disponíveis para:</label> <input
+			type="datetime-local" id="inputDataHora" name="inputDataHora">
+		<button onclick="verificarSalasDisponiveis()">Verificar Salas</button>
+	</div>
+	<div id="salasDisponiveis"></div>
+
+	<div>
+		<button class="verSalas" onclick="verSalasIscte()">Ver cadastro de salas do Iscte</button>
+	</div>
 
 
 	<div class="dropdown">
@@ -171,32 +174,36 @@
         return semanaSemestre;
     }
  	
-//     function verificarSalasDisponiveis() {
-//         var inputDataHora = document.getElementById('inputDataHora').value;
+ 	function verSalasIscte(){
+ 		window.location.href = "salas.html";
+ 	}
+ 	
+    function verificarSalasDisponiveis() {
+        var inputDataHora = document.getElementById('inputDataHora').value;
         
-//         if (!inputDataHora) {
-//             alert('Por favor, selecione uma data e hora.');
-//             return;
-//         }
+        if (!inputDataHora) {
+            alert('Por favor, selecione uma data e hora.');
+            return;
+        }
         
-//         var dataHoraSelecionada = new Date(inputDataHora);
+        var dataHoraSelecionada = new Date(inputDataHora);
 
-//         // Filtrar salas disponíveis com base na data e hora selecionada
-//         var salasDisponiveis = tabledata.filter(function(item) {
-//             var dataAula = new Date(item.data + ' ' + item.horaInicio);
-//             var horaFimAula = new Date(item.data + ' ' + item.horaFim);
-//             // Verifica se a data e hora selecionada está dentro do intervalo da aula
-//             return dataHoraSelecionada >= dataAula && dataHoraSelecionada <= horaFimAula;
-//         }).map(function(item) {
-//             return item.sala;
-//         });
+        // Filtrar salas disponíveis com base na data e hora selecionada
+        var salasDisponiveis = tabledata.filter(function(item) {
+            var dataAula = new Date(item.data + ' ' + item.horaInicio);
+            var horaFimAula = new Date(item.data + ' ' + item.horaFim);
+            // Verifica se a data e hora selecionada está dentro do intervalo da aula
+            return dataHoraSelecionada >= dataAula && dataHoraSelecionada <= horaFimAula;
+        }).map(function(item) {
+            return item.sala;
+        });
 
-//         if (salasDisponiveis.length === 0) {
-//             document.getElementById('salasDisponiveis').innerHTML = '<p>Nenhuma sala disponível para o horário selecionado.</p>';
-//         } else {
-//             document.getElementById('salasDisponiveis').innerHTML = '<p>Salas Disponíveis:</p><ul><li>' + salasDisponiveis.join('</li><li>') + '</li></ul>';
-//         }
-//     }
+        if (salasDisponiveis.length === 0) {
+            document.getElementById('salasDisponiveis').innerHTML = '<p>Nenhuma sala disponível para o horário selecionado.</p>';
+        } else {
+            document.getElementById('salasDisponiveis').innerHTML = '<p>Salas Disponíveis:</p><ul><li>' + salasDisponiveis.join('</li><li>') + '</li></ul>';
+        }
+    }
 
 
     </script>

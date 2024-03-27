@@ -12,11 +12,11 @@
 <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
-	<h1>Salas</h1>
-
-	<div class="identacao">
-		<input type="file" id="fileInput" accept=".csv">
+	<div>
+		<button style="margin: 15px" onclick="voltar()">Voltar</button>
 	</div>
+
+	<h1>Salas</h1>
 
 	<div class="dropdown">
 		<button class="dropbtn">Selecione as Colunas Visíveis</button>
@@ -86,22 +86,26 @@
     var tabledata = []; // Inicializa a variável tabledata
     var table;
 
-    document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
+//     document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
 
-    // Função para ler o arquivo CSV
-    function handleFileSelect(event) {
-        var file = event.target.files[0];
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            var contents = e.target.result;
-            lerCSV(contents);
-        };
-        reader.readAsText(file);
-    }
+//     // Função para ler o arquivo CSV
+//     function handleFileSelect(event) {
+//         var file = event.target.files[0];
+//         var reader = new FileReader();
+//         reader.onload = function(e) {
+//             var contents = e.target.result;
+//             lerCSV(contents);
+//         };
+//         reader.readAsText(file);
+//     }
 
     function lerCSV(csv) {
-        var lines = csv.trim().split('\n');
-        lines.shift(); // Remove o cabeçalho
+    	
+    	fetch(csv)
+        .then(response => response.text())
+        .then(text => {
+            var linhas = text.trim().split('\n');
+            linhas.shift(); // Remove o cabeçalho
         
         lines.forEach(function(line) {
             var columns = line.split(';');           
@@ -147,7 +151,9 @@
         });
         // Inicializa a tabela Tabulator com os dados lidos
         iniciarTabela();
-    }
+        })
+        .catch(error => console.error(error));
+	}
 
     // Função para inicializar a tabela Tabulator
     function iniciarTabela() {
@@ -210,8 +216,13 @@
             });
         });
     }
-
-	 
+    
+    lerCSV('CaracterizacaoDasSalas.csv');
+    
+    function voltar() {
+        history.back();
+    }
+    
 
     </script>
 </body>
