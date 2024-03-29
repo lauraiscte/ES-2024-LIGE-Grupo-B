@@ -9,18 +9,20 @@
 	src="https://unpkg.com/tabulator-tables@4.8.4/dist/js/tabulator.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script type="text/javascript" src="funcoesHorario.js"></script>
 <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
 	<h1>Horário</h1>
 
 	<div class="identacao">
-		<input type="file" id="fileInput" accept=".csv">
+		<input type="file" id="fileInput" accept=".csv" onchange="handleFileSelect(event)">
 	</div>
 
 	<div class="identacao">
-		<label for="inputDataHora">Verificar Salas Disponíveis para:</label> <input
-			type="datetime-local" id="inputDataHora" name="inputDataHora">
+		<label for="Data">Verificar Salas Disponíveis para:</label> 
+		<input type="date" id="Data" name="Data">
+		<input type="time" id="Hora" name="Hora">
 		<button onclick="verificarSalasDisponiveis()">Verificar Salas</button>
 	</div>
 	<div id="salasDisponiveis"></div>
@@ -58,154 +60,6 @@
 
 	<div id="example-table"></div>
 
-	<script type="text/javascript">
-
-    var tabledata = []; // Inicializa a variável tabledata
-    var table;
-
-    document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
-
-    // Função para ler o arquivo CSV
-    function handleFileSelect(event) {
-        var file = event.target.files[0];
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            var contents = e.target.result;
-            lerCSV(contents);
-        };
-        reader.readAsText(file);
-    }
-
-    function lerCSV(csv) {
-        var lines = csv.trim().split('\n');
-        lines.shift(); // Remove o cabeçalho
-        
-        lines.forEach(function(line) {
-            var columns = line.split(';');
-            var dataAulaParts = columns[8].split('/');
-            var dataAula = new Date(dataAulaParts[2], dataAulaParts[1] - 1, dataAulaParts[0]);
-            var semanaAno = getSemanaAno(dataAula);
-            var semanaSemestre = getSemanaSemestre(dataAula);
-            
-            tabledata.push({
-                curso: columns[0],
-                uc: columns[1],
-                turno: columns[2],
-                turma: columns[3],
-                inscritos: columns[4],
-                dia: columns[5],
-                horaInicio: columns[6],
-                horaFim: columns[7],
-                data: dataAula.toLocaleDateString(), //retorna a data sob a forma de string 
-                caracteristicas: columns[9],
-                sala: columns[10],
-                semanaAno: semanaAno,
-                semanaSemestre: semanaSemestre
-            });
-        });
-        // Inicializa a tabela Tabulator com os dados lidos
-        iniciarTabela();
-    }
-
-    // Função para inicializar a tabela Tabulator
-    function iniciarTabela() {
-        table = new Tabulator("#example-table", {
-            data: tabledata,
-            layout: "fitDatafill",
-            pagination: "local",
-            paginationSize: 10,
-            paginationSizeSelector: [5, 10, 20, 40],
-            movableColumns: true,
-            paginationCounter: "rows",
-            initialSort: [{ column: "curso", dir: "asc" }],
-            columns: [
-                { title: "Curso", field: "curso", headerFilter: "input" },
-                { title: "Unidade Curricular", field: "uc", headerFilter: "input" },
-                { title: "Turno", field: "turno", headerFilter: "input" },
-                { title: "Turma", field: "turma", headerFilter: "input" },
-                { title: "Inscritos no turno", field: "inscritos", headerFilter: "input" },
-                { title: "Dia da Semana", field: "dia", headerFilter: "input" },
-                { title: "Hora início da aula", field: "horaInicio", headerFilter: "input" },
-                { title: "Hora fim da aula", field: "horaFim", headerFilter: "input" },
-                { title: "Data da aula", field: "data", headerFilter: "input", sorter: "date"},
-                { title: "Características da sala pedida para a aula", field: "caracteristicas", headerFilter: "input" },
-                { title: "Sala atribuída", field: "sala", headerFilter: "input" },
-                { title: "Semana do ano", field: "semanaAno", headerFilter: "input" },
-                { title: "Semana do semestre", field: "semanaSemestre", headerFilter: "input" },
-            ],
-        });
-        
-        // Adiciona um listener para as caixas de seleção
-        var checkboxes = document.querySelectorAll('input[type=checkbox][name=column]');
-        checkboxes.forEach(function(checkbox) {
-            checkbox.addEventListener('change', function() {
-                var column = this.value;
-                var visible = this.checked;
-                table.toggleColumn(column, visible);
-            });
-        });
-    }
-    
-	// Função para calcular o número da semana do ano
-    function getSemanaAno(date) {   	
-        var firstDayYear = new Date(date.getFullYear(), 0, 1); // Criar objeto Date para o primeiro dia do ano
-        var diff = date.getTime() - firstDayYear.getTime(); // Calcular a diferença em milissegundos entre as duas datas    
-        var oneWeek = 7 * 24 * 60 * 60 * 1000; // Definir a constante para uma semana em milissegundos
-        var semanaAno = Math.floor(diff / oneWeek) + 1; // Calcular o número da semana do ano        
-        return semanaAno;
-    }
-	 
- 	// Função para calcular a semana do semestre
-    function getSemanaSemestre(date) {
-        var month = date.getMonth(); // Janeiro - 0, ...
-        var firstDaySemester;
-        
-        if (month >= 8) { // De setembro a dezembro pertence ao 1º semestre
-            firstDaySemester = new Date(date.getFullYear(), 8, 1); // 1 de Setembro - Data do início do 1º semestre
-        } else if (month < 1) { // Janeiro pertence ao 1º semestre do ano anterior
-            firstDaySemester = new Date(date.getFullYear() - 1, 8, 1); // 1 de Setembro - Data do início do 1º semestre do ano anterior
-        } else { // De fevereiro a agosto pertence ao 2º semestre
-            firstDaySemester = new Date(date.getFullYear(), 1, 1); // 1 de Fevereiro - Data do início do 2º semestre
-        }
-        
-        var diff = date.getTime() - firstDaySemester.getTime();
-        var oneWeek = 7 * 24 * 60 * 60 * 1000;
-        var semanaSemestre = Math.floor(diff / oneWeek) + 1;
-        return semanaSemestre;
-    }
- 	
- 	function verSalasIscte(){
- 		window.location.href = "salas.html";
- 	}
- 	
-    function verificarSalasDisponiveis() {
-        var inputDataHora = document.getElementById('inputDataHora').value;
-        
-        if (!inputDataHora) {
-            alert('Por favor, selecione uma data e hora.');
-            return;
-        }
-        
-        var dataHoraSelecionada = new Date(inputDataHora);
-
-        // Filtrar salas disponíveis com base na data e hora selecionada
-        var salasDisponiveis = tabledata.filter(function(item) {
-            var dataAula = new Date(item.data + ' ' + item.horaInicio);
-            var horaFimAula = new Date(item.data + ' ' + item.horaFim);
-            // Verifica se a data e hora selecionada está dentro do intervalo da aula
-            return dataHoraSelecionada >= dataAula && dataHoraSelecionada <= horaFimAula;
-        }).map(function(item) {
-            return item.sala;
-        });
-
-        if (salasDisponiveis.length === 0) {
-            document.getElementById('salasDisponiveis').innerHTML = '<p>Nenhuma sala disponível para o horário selecionado.</p>';
-        } else {
-            document.getElementById('salasDisponiveis').innerHTML = '<p>Salas Disponíveis:</p><ul><li>' + salasDisponiveis.join('</li><li>') + '</li></ul>';
-        }
-    }
-
-
-    </script>
+	
 </body>
 </html>
