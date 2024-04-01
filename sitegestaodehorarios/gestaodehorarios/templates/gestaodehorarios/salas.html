@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Salas</title>
+
+    <link href="https://unpkg.com/tabulator-tables@4.8.4/dist/css/tabulator.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.8.4/dist/js/tabulator.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    {% load static %}
+    <script type="text/javascript" src="{% static 'gestaodehorarios/scripts/funcoesSalas.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'gestaodehorarios/css/estilo.css' %}">
+</head>
+<body>
+
+<div><a href= "{% url 'gestaodehorarios:pagina_horario' %}" ><button style="margin: 15px">Voltar</button></a></div>
+
+<h1>Salas</h1>
+
+<div class="identacao">
+    <form action="{% url 'gestaodehorarios:verificar_salas' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="Data">Verificar Salas Disponíveis para:</label>
+        <input type="date" id="Data" name="Data">
+        <input type="time" id="Hora" name="Hora">
+        <button type="submit">Verificar Salas</button>
+    </form>
+</div>
+    <div><button style="margin-left: 433px"><a href= "{% url 'gestaodehorarios:carregar_salas' %}" style="text-decoration: none; color: inherit;">Limpar Filtro</a></button></div>
+
+
+<div class="dropdown">
+    <button class="dropbtn">Selecione as Colunas Visíveis</button>
+    <div class="dropdown-content">
+        <label><input type="checkbox" name="column" value="edificio"
+                      checked>Edifício</label> <label><input type="checkbox"
+                                                             name="column" value="nomeSala" checked>Nome sala</label>
+        <label><input
+                type="checkbox" name="column" value="capacidadeNormal" checked>Capacidade
+            Normal</label> <label><input type="checkbox" name="column"
+                                         value="capacidadeExame" checked>Capacidade Exame</label> <label><input
+            type="checkbox" name="column" value="numCaracteristicas" checked>Nº
+        características</label> <label><input type="checkbox" name="column"
+                                              value="anfiteatro" checked>Anfiteatro aulas</label> <label><input
+            type="checkbox" name="column" value="apoioTecnicoEventos" checked>Apoio
+        técnico eventos</label> <label><input type="checkbox" name="column"
+                                              value="arq1" checked>Arq 1</label> <label><input
+            type="checkbox" name="column" value="arq2" checked>Arq 2</label> <label><input
+            type="checkbox" name="column" value="arq3" checked>Arq 3</label> <label><input
+            type="checkbox" name="column" value="arq4" checked>Arq 4</label> <label><input
+            type="checkbox" name="column" value="arq5" checked>Arq 5</label> <label><input
+            type="checkbox" name="column" value="arq6" checked>Arq 6</label> <label><input
+            type="checkbox" name="column" value="arq9" checked>Arq 9</label> <label><input
+            type="checkbox" name="column" value="byod" checked>BYOD
+        (Bring Your Own Device)</label> <label><input type="checkbox"
+                                                      name="column" value="focusGroup" checked>Focus Group</label>
+        <label><input
+                type="checkbox" name="column" value="horarioVisivelPub" checked>Horário
+            sala visível portal público</label> <label><input type="checkbox"
+                                                              name="column" value="labArqI" checked>Laboratório de
+        Arquitectura de Computadores I</label> <label><input type="checkbox"
+                                                             name="column" value="labArqII" checked>Laboratório de
+        Arquitectura de Computadores II</label> <label><input
+            type="checkbox" name="column" value="labBasesEng" checked>Laboratório
+        de Bases de Engenharia</label> <label><input type="checkbox"
+                                                     name="column" value="labEletro" checked>Laboratório de
+        Electrónica</label> <label><input type="checkbox" name="column"
+                                          value="labInfo" checked>Laboratório de Informática</label> <label><input
+            type="checkbox" name="column" value="labJornalismo" checked>Laboratório
+        de Jornalismo</label> <label><input type="checkbox" name="column"
+                                            value="labRedesCompI" checked>Laboratório de Redes de
+        Computadores I</label> <label><input type="checkbox" name="column"
+                                             value="labRedesCompII" checked>Laboratório de Redes de
+        Computadores II</label> <label><input type="checkbox" name="column"
+                                              value="labTele" checked>Laboratório de Telecomunicações</label>
+        <label><input
+                type="checkbox" name="column" value="salaAulasMestrado" checked>Sala
+            Aulas Mestrado</label> <label><input type="checkbox" name="column"
+                                                 value="salaAulasMestradoPlus" checked>Sala Aulas Mestrado
+        Plus</label> <label><input type="checkbox" name="column"
+                                   value="salaNee" checked>Sala NEE</label> <label><input
+            type="checkbox" name="column" value="salaProvas" checked>Sala
+        Provas</label> <label><input type="checkbox" name="column"
+                                     value="salaReuniao" checked>Sala Reunião</label> <label><input
+            type="checkbox" name="column" value="salaArquitetura" checked>Sala
+        de Arquitectura</label> <label><input type="checkbox" name="column"
+                                              value="salaAulaNormal" checked>Sala de Aulas normal</label> <label><input
+            type="checkbox" name="column" value="videoconferencia" checked>Videoconferência</label>
+        <label><input type="checkbox" name="column" value="atrio"
+                      checked>Átrio</label>
+
+    </div>
+</div>
+<br>
+<div id="example-table"></div>
+<script>
+    iniciarTabelaSalas({{ dados_para_tabela|safe }});
+</script>
+</body>
+</html>

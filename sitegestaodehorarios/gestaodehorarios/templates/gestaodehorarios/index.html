@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Página Inicial</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'gestaodehorarios/css/estilo.css' %}">
+</head>
+<body>
+<h1>Página Inicial</h1>
+
+<div class="identacao">
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <form action="{% url 'gestaodehorarios:processar_csv' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="csv_file" id="fileInput" accept=".csv">
+        <button type="submit">Enviar</button>
+    </form>
+</div>
+
+
+
+</body>
+</html>

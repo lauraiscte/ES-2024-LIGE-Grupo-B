@@ -1,0 +1,88 @@
+body {
+    font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
+    background-color: #C0D8E0;
+}
+
+h1 {
+    color: #C0D8E0;
+    background-color: #12475A;
+    text-align: center;
+    width: 120px;
+    border: 10px solid #077187;
+    padding: 20px;
+    margin: 15px;
+}
+
+.identacao {
+	padding-top: 10px;
+	margin: 15px;
+}
+
+
+p {
+    font-size: 16px;
+}
+
+.tabulator {
+	padding: 5px;
+	margin: 15px;
+}
+
+/* Estilo para o menu dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block; /* Alterado para inline-block para melhorar a interação */
+}
+
+/* Estilo para o botao do menu dropdown */
+.dropbtn {
+  background-color: #efefef;
+  color: #333;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  padding-top: 10px;
+  margin: 15px;
+}
+
+/* Estilo para o conteudo do dropdown (as checkboxes) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 700px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+
+/* Estilo para as checkboxes dentro do dropdown */
+.dropdown-content label {
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+/* Mostra o conteudo do dropdown quando o botao e clicado */
+.dropdown:focus-within .dropdown-content {
+  display: block;
+}
+
+/* Estilo para as checkboxes */
+.dropdown-content input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+
+.verSalas {
+  background-color: #efefef;
+  color: #333;
+  padding: 10px;
+  font-size: 16px;
+  border: 3px solid #077187;
+  cursor: pointer;
+  padding-top: 10px;
+  margin: 15px;
+  margin-right: 30px;
+  float: right;
+}
