@@ -1,4 +1,3 @@
-
 var table;
 var salasOcupadas = []; // Armazenará os dados das salas ocupadas
 var salasExistentes = []; // Armazenará os dados das salas existentes
@@ -31,7 +30,6 @@ function iniciarTabelaHorario(dados_para_tabela) {
             { title: "Semana do semestre", field: "semanaSemestre", headerFilter: "input" },
         ],
     });
-
     // Adiciona um listener para as caixas de seleção
     var checkboxes = document.querySelectorAll('input[type=checkbox][name=column]');
     checkboxes.forEach(function(checkbox) {
@@ -55,40 +53,9 @@ function salaEstaDisponivel1(sala, data) {
 	            return false; // A sala está ocupada neste intervalo de tempo
 	        }
 		}
-
     }
     return true; // A sala está disponível neste intervalo de tempo
 }
-
-function verificarSalasDisponiveis() {
-    salasDisponiveis = [];
-
-    var inputData = document.getElementById('Data').value;
-
-    if (!inputData) {
-        alert('Por favor, selecione uma data e hora.');
-        return;
-    }
-
-
-
-    // Limpar a lista de salas disponíveis antes de verificar novamente
-    salasDisponiveis = [];
-
-    for (var i = 0; i < salasExistentes.length; i++) {
-        if (salaEstaDisponivel1(salasExistentes[i].sala, inputData.toLocaleDateString())) {
-            salasDisponiveis.push(salasExistentes[i].sala);
-        }
-    }
-
-    if (salasDisponiveis.length === 0) {
-        document.getElementById('salasDisponiveis').innerHTML = '<p>Nenhuma sala disponível para o horário selecionado.</p>';
-    } else {
-        document.getElementById('salasDisponiveis').innerHTML = '<p>Salas Disponíveis:</p>' + salasDisponiveis.join(', ') + '<br>';
-    }
-}
-
-
 
 
 

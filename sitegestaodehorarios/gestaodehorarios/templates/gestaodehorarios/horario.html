@@ -17,7 +17,7 @@
 <div id="salasDisponiveis"></div>
 
 <div>
-    <a href= "{% url 'gestaodehorarios:carregar_salas' %}" ><button class="verSalas">Ver cadastro de salas do Iscte</button></a>
+    <a href= "{% url 'gestaodehorarios:carregar_salas' %}" ><button class="botaoMudarPagina" id="verSalas">Ver cadastro de salas do Iscte</button></a>
 </div>
 
 
@@ -52,6 +52,20 @@
 <script>
     iniciarTabelaHorario({{ dados_para_tabela|safe }});
 </script>
+
+<div>
+    <button class="botaoMudarPagina" id="sugerirSlotSubstituicao">Sugerir slot para aula de substituição</button>
+    <button class="botaoMudarPagina" id="sugerirAlocacao">Sugerir slots para alocação das aulas de uma UC</button>
+</div>
+
+<div>
+    <label for="aulas">Escolha uma aula:</label>
+    <select name="aulas" id="aulas">
+    {% for aula in dados_para_tabela %}
+        <option value="{{ aula.curso }} - {{ aula.uc }} - {{ aula.turno }}">{{ aula.curso }} - {{ aula.uc }} - {{ aula.turno }}</option>
+    {% endfor %}
+    </select>
+</div>
 
 </body>
 </html>
